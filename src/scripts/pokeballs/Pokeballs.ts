@@ -23,10 +23,38 @@ class Pokeballs implements Feature {
 
     constructor() {
         this.pokeballs = [
-            new Pokeball(GameConstants.Pokeball.Pokeball, 0, 1250, 'A standard Pokéball', 25),
-            new Pokeball(GameConstants.Pokeball.Greatball, 5, 1000, '+5% chance to catch'),
-            new Pokeball(GameConstants.Pokeball.Ultraball, 10, 750, '+10% chance to catch'),
-            new Pokeball(GameConstants.Pokeball.Masterball, 100, 500, '100% chance to catch'),
+            new Pokeball(GameConstants.Pokeball.Pokeball, () => 0, 1250, 'A standard Pokéball', 25),
+            new Pokeball(GameConstants.Pokeball.Greatball, () => 5, 1000, '5% catch chance bonus'),
+            new Pokeball(GameConstants.Pokeball.Ultraball, () => 10, 750, '10% catch chance bonus'),
+            new Pokeball(GameConstants.Pokeball.Masterball, () => 100, 500, '100% catch chance'),
+            // TODO: these balls...
+            new Pokeball(GameConstants.Pokeball.Premierball, () => 0, 1000, 'Slightly faster than a Pokéball'),
+            new Pokeball(GameConstants.Pokeball.Fastball, () => 0, 500, 'Catch Pokémon faster'),
+            new Pokeball(GameConstants.Pokeball.GSball, () => 0, 2000, 'A special Pokéball'),
+            new Pokeball(GameConstants.Pokeball.Loveball, () => {
+                const enemy = Battle.enemyPokemon();
+                if (!enemy || !(+enemy.type1 >= 0)) {
+                    return 0;
+                }
+                return enemy.type1 === PokemonType.Fairy || enemy.type2 === PokemonType.Fairy ? 15 : 0;
+            }, 1000, 'Fairy Pokémon 15% catch chance bonus'),
+            new Pokeball(GameConstants.Pokeball.Luxuryball, () => 20, 500, '+20% chance to catch'),
+            new Pokeball(GameConstants.Pokeball.Rocketball, () => {
+                const enemy = Battle.enemyPokemon();
+                if (!enemy || !(+enemy.type1 >= 0)) {
+                    return 0;
+                }
+                return enemy.type1 === PokemonType.Dark || enemy.type2 === PokemonType.Dark ? 15 : 0;
+            }, 500, 'Dark Pokémon 15% catch chance bonus'),
+            new Pokeball(GameConstants.Pokeball.Sportball, () => {
+                const enemy = Battle.enemyPokemon();
+                if (!enemy || !(+enemy.type1 >= 0)) {
+                    return 0;
+                }
+                return enemy.type1 === PokemonType.Bug || enemy.type2 === PokemonType.Bug ? 15 : 0;
+            }, 500, 'Bug Pokémon 15% catch chance bonus'),
+            // TODO: I don't know
+            new Pokeball(GameConstants.Pokeball.Timerball, () => 20, 500, '5% → 20% catch chance bonus based on route defeats'),
         ];
         this._alreadyCaughtSelection = ko.observable(this.defaults.alreadyCaughtSelection);
         this._alreadyCaughtShinySelection = ko.observable(this.defaults.alreadyCaughtShinySelection);
@@ -93,7 +121,7 @@ class Pokeballs implements Feature {
     }
 
     getCatchBonus(ball: GameConstants.Pokeball): number {
-        return this.pokeballs[ball].catchBonus;
+        return this.pokeballs[ball].catchBonus();
     }
 
     getBallQuantity(ball: GameConstants.Pokeball): number {

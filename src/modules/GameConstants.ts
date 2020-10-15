@@ -182,6 +182,15 @@ export enum Pokeball {
     'Greatball' = 1,
     'Ultraball' = 2,
     'Masterball' = 3,
+    // TODO: more balls, change order
+    'Premierball',
+    'Fastball',
+    'GSball',
+    'Loveball',
+    'Luxuryball',
+    'Rocketball',
+    'Sportball',
+    'Timerball',
 }
 
 export enum Currency {
