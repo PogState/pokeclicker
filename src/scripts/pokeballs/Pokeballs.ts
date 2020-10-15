@@ -74,6 +74,7 @@ class Pokeballs implements Feature {
      * @param isShiny if the pokémon is shiny.
      * @returns {GameConstants.Pokeball} pokéball to use.
      */
+    // TODO: maybe just use the standard Pokeball once the selected ball runs out?
     public calculatePokeballToUse(id: number, isShiny: boolean): GameConstants.Pokeball {
         const alreadyCaught = App.game.party.alreadyCaughtPokemon(id);
         const alreadyCaughtShiny = App.game.party.alreadyCaughtPokemon(id, true);
