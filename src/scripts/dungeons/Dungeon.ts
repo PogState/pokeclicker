@@ -280,7 +280,7 @@ dungeonList['Fiery Path'] = new Dungeon('Fiery Path',
     ['Machop', 'Grimer', 'Koffing', 'Slugma', 'Numel'],
     [GameConstants.BattleItemType.xAttack, GameConstants.BattleItemType.Lucky_egg],
     424000,
-    [new DungeonBossPokemon('Torkoal', 1200000, 20)],
+    [new DungeonBossPokemon('Torkoal', 1, 20)],
     17000, 101, 5);
 
 dungeonList['Meteor Falls'] = new Dungeon('Meteor Falls',
